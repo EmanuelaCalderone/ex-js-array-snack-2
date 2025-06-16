@@ -52,17 +52,16 @@ const books = [
 
 const longBooks = books.filter(book => book.pages > 300);
 const longBooksTitles = longBooks.map(book => book.title);
-console.log(longBooksTitles)
-
+longBooksTitles.forEach(title => console.log(title))
 
 /*Creare un array (availableBooks) che contiene tutti i libri disponibili.
 Crea un array (discountedBooks) con gli availableBooks, ciascuno con il prezzo scontato del 20% (mantieni lo stesso formato e arrotonda al centesimo)
 Salva in una variabile (fullPricedBook) il primo elemento di discountedBooks che ha un prezzo intero (senza centesimi).*/
 
-const availableBooks = books.filter(book => book.available === true)
+const availableBooks = books.filter(book => book.available)
 const discountedBooks = availableBooks.map(book => {
     const originalPrice = parseFloat(book.price.replace('€', ''));
-    const discountedPrice = (originalPrice * 0.8).toFixed();
+    const discountedPrice = (originalPrice * 0.8).toFixed(2);
 
     return {
         ...book,
@@ -70,6 +69,14 @@ const discountedBooks = availableBooks.map(book => {
     }
 })
 console.log(discountedBooks)
+
+const fullPricedBook = discountedBooks.find(book => {
+    const price = parseFloat(book.price.replace('€', ''));
+    //return price % 1 === 0;
+    return Number.isInteger(price);
+});
+
+console.log(fullPricedBook)
 
 /* Creare un array (authors) che contiene gli autori dei libri.
 Crea una variabile booleana (areAuthorsAdults) per verificare se gli autori sono tutti maggiorenni.
